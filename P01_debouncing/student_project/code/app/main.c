@@ -186,10 +186,41 @@ uint8_t detect_switch_change(void)
 static uint8_t detect_switch_change_debounce(void)
 {
     /// STUDENTS: To be programmed
-
-
-
-
+		static uint8_t switch_samples[NR_SAMPLES];
+		int i;
+		uint8_t changing_bits = 0;
+		uint8_t ack_low = 0;
+		uint8_t ack_high = 1;
+		uint8_t ret_val = 0;
+		uint8_t new_sample = 0;
+	
+		hal_gpio_bit_toggle(GPIOB, 0x040);
+	
+		for(i = 0; i < NR_SAMPLES - 1; i++){
+			
+			switch_samples[i] = switch_samples[i + 1];
+			ack_high &= switch_samples[i];
+			ack_low |= switch_samples[i];
+			
+		}
+		switch_samples[NR_SAMPLES - 1] = (uint8_t) hal_gpio_input_read(GPIOB);
+		new_sample = switch_samples[NR_SAMPLES - 1];
+		
+		changing_bits = ((~ack_low & ~ack_high) & new_sample) | ((ack_low & ack_high) & ~new_sample);
+    
+		
+		if (changing_bits & BITMASK_KEY_0) {
+        ret_val = 0;
+    } else if (changing_bits & BITMASK_KEY_1) {
+        ret_val = 1;
+    } else if (changing_bits & BITMASK_KEY_2) {
+        ret_val = 2;
+    } else if (changing_bits & BITMASK_KEY_3) {
+        ret_val = 3;
+    } else {
+        ret_val = 0xFF;
+    }
+    return(ret_val);
     /// END: To be programmed
 }
 
