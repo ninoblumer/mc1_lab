@@ -32,7 +32,8 @@
 
 /*  typedef used for task 4.4 */
 typedef struct {
-    uint8_t samples[NR_SAMPLES];   // space to store the samples
+		reg_gpio_t *port;
+    uint8_t samples[NR_SAMPLES];    // space to store the samples
     uint8_t write_index;            // index where next sample will be written
                                     // to array
 } sample_buffer_t;
@@ -55,9 +56,10 @@ int main(void)
     
     /* additional variable definitions go here */
     /// STUDENTS: To be programmed
-
-
-
+		sample_buffer_t port_list[2] = {0};
+	
+		port_list[0].port= GPIOB;
+		port_list[1].port= GPIOA;
 
     /// END: To be programmed
 
@@ -102,7 +104,13 @@ int main(void)
             default:
                 /* Task 4.4: Edge detection WITH multiple extension boards */
                 /// STUDENTS: To be programmed
-
+								i = CT_DIPSW->BYTE.S15_8;
+								switch (i)  {
+									case 1:
+									case 0: 
+										switch_change = generic_debounce(port_list+i, (uint8_t) hal_gpio_input_read(port_list[i].port));
+									break;
+								}
 
 
 
@@ -190,7 +198,7 @@ static uint8_t detect_switch_change_debounce(void)
 		int i;
 		uint8_t changing_bits = 0;
 		uint8_t ack_low = 0;
-		uint8_t ack_high = 1;
+		uint8_t ack_high = 0xFF;
 		uint8_t ret_val = 0;
 		uint8_t new_sample = 0;
 	
@@ -206,7 +214,7 @@ static uint8_t detect_switch_change_debounce(void)
 		switch_samples[NR_SAMPLES - 1] = (uint8_t) hal_gpio_input_read(GPIOB);
 		new_sample = switch_samples[NR_SAMPLES - 1];
 		
-		changing_bits = ((~ack_low & ~ack_high) & new_sample) | ((ack_low & ack_high) & ~new_sample);
+		changing_bits = (~ack_low & new_sample) | (ack_high & ~new_sample);
     
 		
 		if (changing_bits & BITMASK_KEY_0) {
@@ -249,7 +257,40 @@ static uint8_t generic_debounce(sample_buffer_t *sample_buffer,
                                 uint8_t new_sample)
 {
     /// STUDENTS: To be programmed
-
+		int i;
+		uint8_t changing_bits = 0;
+		uint8_t ack_low = 0;
+		uint8_t ack_high = 0xFF;
+		uint8_t ret_val = 0;
+	
+		hal_gpio_bit_toggle(GPIOB, 0x040);
+	
+		// accumulate continuous high / low
+		for(i = 0; i < NR_SAMPLES - 1; i++) {
+			ack_high &= sample_buffer->samples[i];
+			ack_low  |= sample_buffer->samples[i];
+		}
+		
+		// detect change 
+		changing_bits = (~ack_low & new_sample) | (ack_high & ~new_sample);
+    
+		//  insert new sample into ring buffer
+		sample_buffer->samples[sample_buffer->write_index] = new_sample;
+		sample_buffer->write_index++;
+		sample_buffer->write_index %= NR_SAMPLES;
+		
+		if (changing_bits & BITMASK_KEY_0) {
+        ret_val = 0;
+    } else if (changing_bits & BITMASK_KEY_1) {
+        ret_val = 1;
+    } else if (changing_bits & BITMASK_KEY_2) {
+        ret_val = 2;
+    } else if (changing_bits & BITMASK_KEY_3) {
+        ret_val = 3;
+    } else {
+        ret_val = 0xFF;
+    }
+    return(ret_val);
 
 
 
