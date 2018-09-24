@@ -55,10 +55,11 @@ static uint8_t disp_buf[NUM_OF_DIGITS];
 void disp_reg_new_value(uint8_t value)
 {
     /// STUDENTS: To be programmed
-
-
-
-
+		uint8_t i;
+		for(i = NUM_OF_DIGITS-1; i >= 1; i--) {
+			disp_buf[i] = disp_buf[i-1];
+		}
+		disp_buf[0] = int2hex[value];
     /// END: To be programmed
 }
 
@@ -68,10 +69,25 @@ void disp_reg_new_value(uint8_t value)
 void disp_update(void)
 {
     /// STUDENTS: To be programmed
+		static const uint16_t bit_mask = 0x07FF;
+		uint16_t i, select, w_data;
+		
+		hal_gpio_bit_set(GPIOA, 1 << 11);
+	
+		for(i=0; i < NUM_OF_DIGITS; i++) {
+			w_data = 0;
+			
+			w_data = disp_buf[i];										// 7-seg-data
+			w_data |= (i & 0x7) << 8;								// digit select
+			
+			hal_gpio_bit_reset(GPIOA, bit_mask);		// clear 
+			hal_gpio_bit_set(GPIOA, w_data);				// set data
+			
+			hal_gpio_bit_reset(GPIOA, 1 <<  11);		// enable
+			hal_gpio_bit_set(GPIOA, 1 <<  11);			// un enable
 
-
-
-
+		}
+		
     /// END: To be programmed
 }
 /*

@@ -42,6 +42,7 @@ int32_t main(void)
     uint8_t prev_mode = 0;
     /// STUDENTS: To be programmed
 
+		uint16_t i;
 
 
 
@@ -62,26 +63,42 @@ int32_t main(void)
             disp_clear_buffer();
             disp_update();
             inout_led_write(mode);
-        }
- 
-        /* Depending on the selected mode, display the following information
-           on the 7-segment display:
+				}
+						/* Depending on the selected mode, display the following information
+						 on the 7-segment display:
+					
+						 MODE_HW_TEST         --> All segments on
+						 MODE_NR_SEQUENCE     --> display 01234567
+						 MODE_COL_BY_COL      --> Read and display one key using Col by Col
+																			method. The new digit is shifted in from 
+																			the right.
+						 MODE_FAST_SCAN       --> Read and display one key using fast scan
+																			method. The new digit is shifted in from 
+																			the right.
+					 */
+						switch(mode) {
+							case MODE_HW_TEST:
+								for(i = 0; i < 8; i++) {
+									disp_reg_new_value(8);
+								}
+								disp_update();
+								break;
+							case MODE_NR_SEQUENCE:
+								for(i = 0; i < 8; i++) {
+									disp_reg_new_value(i);
+								}
+								disp_update();
+								break;
+						
+						
+						}
+
         
-           MODE_HW_TEST         --> All segments on
-           MODE_NR_SEQUENCE     --> display 01234567
-           MODE_COL_BY_COL      --> Read and display one key using Col by Col
-                                    method. The new digit is shifted in from 
-                                    the right.
-           MODE_FAST_SCAN       --> Read and display one key using fast scan
-                                    method. The new digit is shifted in from 
-                                    the right.
-         */
-        /// STUDENTS: To be programmed        
+				
+ 
+	
 
-
-
-
-        /// END: To be programmed        
+     
     }
 
 }
