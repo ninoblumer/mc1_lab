@@ -43,7 +43,8 @@ int32_t main(void)
     /// STUDENTS: To be programmed
 
 		uint16_t i;
-
+		uint8_t key;
+		uint8_t key_pressed = 0;
 
 
     /// END: To be programmed
@@ -89,16 +90,32 @@ int32_t main(void)
 								}
 								disp_update();
 								break;
-						
-						
+							case MODE_COL_BY_COL:
+								key = scan_keypad_cbc();
+								if( (key != NOKEY_PRESSED) ) {
+									if(key_pressed  == 0) {
+										key_pressed = 1;
+										disp_reg_new_value(key);
+										disp_update();
+									}
+								}  else {
+									key_pressed = 0;
+								}
+								break;
+							case MODE_FAST_SCAN:
+								key = scan_keypad_fast();
+								if( (key != NOKEY_PRESSED) ) {
+									if(key_pressed  == 0) {
+										key_pressed = 1;
+										disp_reg_new_value(key);
+										disp_update();
+									}
+								}  else {
+									key_pressed = 0;
+								}
+								break;
 						}
 
-        
-				
- 
-	
-
-     
     }
 
 }
