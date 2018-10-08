@@ -28,14 +28,11 @@ Project File Date:  09/24/2018
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
 compiling inout.c...
-compiling keypad.c...
-app\keypad.c(31): warning:  #177-D: variable "key_array"  was declared but never referenced
-  static const int key_array [4][4] = { { 0x1, 0x2, 0x3, 0xF },
-app\keypad.c: 1 warning, 0 errors
 compiling display.c...
 app\display.c(73): warning:  #177-D: variable "select"  was declared but never referenced
   		uint16_t i, select, w_data;
 app\display.c: 1 warning, 0 errors
+compiling keypad.c...
 assembling datainit_ctboard.s...
 assembling startup_ctboard.s...
 compiling main.c...
@@ -45,8 +42,8 @@ compiling hal_gpio.c...
 compiling hal_pwr.c...
 compiling hal_rcc.c...
 linking...
-Program Size: Code=3364 RO-data=464 RW-data=8 ZI-data=8192  
-".\build\Lab.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=3860 RO-data=564 RW-data=8 ZI-data=8192  
+".\build\Lab.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -69,37 +66,37 @@ Package Vendor: InES
 <h2>Collection of Component Files used:</h2>
 
    * Component: InES::HAL:RCC:3.0.1
-      Source file:   HAL\Source\hal_rcc.c
+      Include file:  Device\Include\reg_stm32f4xx.h
       Include file:  HAL\Include\hal_common.h
       Include file:  HAL\Include\hal_rcc.h
-      Include file:  Device\Include\reg_stm32f4xx.h
+      Source file:   HAL\Source\hal_rcc.c
 
    * Component: InES::HAL:PWR:2.2.0
-      Include file:  HAL\Include\hal_pwr.h
       Include file:  Device\Include\reg_stm32f4xx.h
       Include file:  HAL\Include\hal_common.h
       Source file:   HAL\Source\hal_pwr.c
+      Include file:  HAL\Include\hal_pwr.h
 
    * Component: InES::HAL:GPIO:3.0.3
-      Include file:  Device\Include\reg_stm32f4xx.h
-      Source file:   HAL\Source\hal_gpio.c
       Include file:  HAL\Include\hal_common.h
       Include file:  HAL\Include\hal_gpio.h
+      Source file:   HAL\Source\hal_gpio.c
+      Include file:  Device\Include\reg_stm32f4xx.h
 
    * Component: InES::HAL:FMC:3.0.1
-      Source file:   HAL\Source\hal_fmc.c
       Include file:  Device\Include\reg_stm32f4xx.h
-      Include file:  HAL\Include\hal_common.h
       Include file:  HAL\Include\hal_fmc.h
+      Include file:  HAL\Include\hal_common.h
+      Source file:   HAL\Source\hal_fmc.c
 
    * Component: InES::Device:Startup:3.0.5
-      Include file:  Device\Include\reg_ctboard.h
-      Source file:   Device\Source\system_ctboard.c
+      Include file:  Device\Include\system_ctboard.h
+      Include file:  Device\Include\m0\platform_ctboard.h
       Source file:   Device\Source\startup_ctboard.s
       Include file:  Device\Include\reg_stm32f4xx.h
-      Include file:  Device\Include\m0\platform_ctboard.h
-      Include file:  Device\Include\system_ctboard.h
       Source file:   Device\Source\datainit_ctboard.s
+      Source file:   Device\Source\system_ctboard.c
+      Include file:  Device\Include\reg_ctboard.h
 Build Time Elapsed:  00:00:01
 </pre>
 </body>
