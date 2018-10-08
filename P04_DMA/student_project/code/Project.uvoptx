@@ -150,34 +150,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>105</LineNumber>
+          <LineNumber>103</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134219588</Address>
+          <Address>134219198</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\App\hal_acc.c</Filename>
+          <Filename>.\App\main.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Project\App/hal_acc.c\105</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>314</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134218748</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\App\hal_acc.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\Project\App/hal_acc.c\314</Expression>
+          <Expression>\\Project\App/main.c\103</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -247,12 +231,6 @@
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
       <pMultCmdsp></pMultCmdsp>
-      <SystemViewers>
-        <Entry>
-          <Name>System Viewer\DMA2</Name>
-          <WinId>35905</WinId>
-        </Entry>
-      </SystemViewers>
     </TargetOption>
   </Target>
 

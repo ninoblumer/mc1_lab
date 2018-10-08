@@ -90,10 +90,19 @@ static void calculate_acc_average(int16_t *buffer, int16_t *result,
                                   uint16_t buffer_length)
 {
     /// STUDENTS: To be programmed
-
-
-
-
+		int i = 0;
+		int j = 0;
+		for(j = 0; j < 3; j ++){
+			result[j] = 0;
+		}
+		for(i = 0; i < buffer_length; i++){
+			for(j = 0; j < 3; j ++){
+				result[j] += buffer[3*i+j];	
+			}
+		}
+		for(j = 0; j < 3; j ++){
+			result[j] /= buffer_length;
+		}
     /// END: To be programmed    
     return;
 }

@@ -55,8 +55,11 @@ void accelerometer_init(void)
     write_reg(CTRL3_C_ADD, 0x01);   //Reset Sensor
 
     /// STUDENTS: To be programmed
-
-
+		
+		write_reg(INT1_CTRL_ADD, ((0x1)));					// Set interrupt
+		write_reg(CTRL1_XL_ADD, ((0xF) << 3));			// Enable Full Scale 
+		write_reg(CTRL3_C_ADD, ((0x1) << 2));				// Enable auto increment
+		
 
 
     /// END: To be programmed
