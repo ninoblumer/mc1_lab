@@ -25,7 +25,7 @@
  * ------------------------------------------------------------------------- */
 
 #define PIN_USER_BUTTON (0x1 << 0u)
-
+#define EXTI_LINE_0   (uint32_t)0x00001                // External interrupt line 0
 
 /* -- Module-wide variable definitions
  * ------------------------------------------------------------------------- */
@@ -33,7 +33,7 @@
 // Set to TRUE by interrupt handler
 // Reset to FALSE through function did_button_get_pressed()
 static volatile hal_bool_t button_pressed = FALSE;
-
+static int butt_pressed = 0;
 
 /* -- Public function definitions
  * ------------------------------------------------------------------------- */
@@ -60,11 +60,12 @@ void button_init(void)
  */
 hal_bool_t did_button_get_pressed(void)
 {
-    hal_bool_t return_val = FALSE;
+    hal_bool_t return_val = butt_pressed;
 
     /// STUDENTS: To be programmed
-
-
+		
+		butt_pressed = 0;
+		
 
 
     /// END: To be programmed
@@ -77,7 +78,13 @@ hal_bool_t did_button_get_pressed(void)
  * ------------------------------------------------------------------------- */
 
 /// STUDENTS: To be programmed
-
+void EXTI0_IRQHandler(void)
+{
+    /* Check if interrupt fired and clear interrupt */
+  butt_pressed = 1;
+	
+	EXTI->PR |= EXTI_LINE_0;
+}
 
 
 

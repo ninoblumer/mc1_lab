@@ -54,10 +54,19 @@ void wakeup_init(void)
      */
 
     /// STUDENTS: To be programmed
-
-
-
-
+		PWR -> CR |= (1 << 8);
+		RTC -> WPR = (0xCA);
+		RTC -> WPR = (0x53);
+		RCC -> BDCR |= (2 << 8);
+		RCC -> BDCR |= (1 << 15);
+		RTC -> CR &= ~(1 << 10);
+		
+		while(!((RTC -> ISR) & (1 << 2)));
+		
+		RTC -> WUTR = 0x0CCD;
+		
+		RTC -> CR |= (1 << 14);			// Interrupt enable
+		
     /// END: To be programmed
 }
 
@@ -65,7 +74,12 @@ void wakeup_init(void)
  * ------------------------------------------------------------------------- */
 
 /// STUDENTS: To be programmed
-
+void RTC_WQUP_IRQHandler(void){
+		
+		RTC -> ISR &= ~(1 << 10);
+		EXTI -> PR |= (1 << 22);
+		
+}	
 
 
 
